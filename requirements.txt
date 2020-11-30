@@ -1,0 +1,11 @@
+anytree
+black
+Click
+cookiecutter
+matplotlib
+numpy==1.19.3
+pytest
+pytest-cov
+pytest-xdist
+tox
+tqdm
