@@ -1,0 +1,7 @@
+{
+    "advendofcode2020": ".",
+    "day": "32",
+    "directory_name": "day_{{cookiecutter.day}}",
+    "file_name": "day{{cookiecutter.day}}",
+    "class_name": "Day{{cookiecutter.day}}"
+}
