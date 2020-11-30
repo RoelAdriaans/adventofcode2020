@@ -1,6 +1,6 @@
 import pytest
 
-from utils import advent_utils
+from adventofcode2020.utils import advent_utils
 
 
 def test_string_to_list_of_ints():
