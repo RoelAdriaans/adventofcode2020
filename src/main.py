@@ -18,6 +18,8 @@ def main(module):
     """
     Simple program that runs a module from the advent of code
     """
+    print("Welcome to Advent of Code 2020")
+
     item = [item for item in modules if item[0].__name__ == module]
     if not item:
         print(f"Module {module} not found")
