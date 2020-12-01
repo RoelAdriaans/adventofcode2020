@@ -41,3 +41,15 @@ pip3 install -e .
 ### Run
 
 Use `tox` to run the tests, run `adventofcode` to run the main application.
+
+## Useful Repo's
+
+### 2020
+
+- <https://github.com/SebastiaanZ/aoc-2020>
+- <https://github.com/joelgrus/advent2020>
+
+### 2019
+
+- <https://github.com/SebastiaanZ/aoc-2019>
+- <https://github.com/joelgrus/advent2019>

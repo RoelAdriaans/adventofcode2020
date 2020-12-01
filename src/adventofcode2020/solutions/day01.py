@@ -1,7 +1,10 @@
+import logging
 import math
 from itertools import combinations
 
 from adventofcode2020.utils.abstract import FileReaderSolution
+
+logger = logging.getLogger(__name__)
 
 
 class Day01:
@@ -10,6 +13,7 @@ class Day01:
         ints = [int(x) for x in input_data.split("\n")]
         for x in combinations(ints, n):
             if sum(x) == 2020:
+                logger.debug(f"Found the values {x}")
                 return math.prod(x)
         return -1
 
