@@ -8,7 +8,7 @@ setup(
     author="Roel Adriaans",
     author_email="roel@adriaans.org",
     url="https://github.com/roeladriaans",
-    entry_points={"console_scripts": ["adventofcode = main:main"]},
+    entry_points={"console_scripts": ["adventofcode = adventofcode2020.main:main"]},
     python_requires=">=3.9.*",
     packages=find_packages(where="src", exclude=["tests.*", "test*"]),
     package_dir={"": "src"},
