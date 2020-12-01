@@ -52,7 +52,7 @@ def main(day, part, timeit_, verbose):
     logger.debug(f"Importing {import_path}")
 
     try:
-        day = importlib.import_module(import_path)
+        day_module = importlib.import_module(import_path)
     except ModuleNotFoundError:
         print(f"Module {day} is not yet available")
         sys.exit(-65)
@@ -62,7 +62,9 @@ def main(day, part, timeit_, verbose):
 
         for _ in tqdm.trange(timeit_):
             time_prior = timeit.default_timer()
-            results = run_day(data_path, day, part)
+
+            results = run_day(data_path, day, day_module, part)
+
             time_after = timeit.default_timer()
             execution_times.append(time_after - time_prior)
 
@@ -75,30 +77,30 @@ def main(day, part, timeit_, verbose):
         )
     else:
         print("Results:")
-        print(run_day(data_path, day, part))
+        print(run_day(data_path, day, day_module, part))
 
 
-def run_day(data_path, day, part):
+def run_day(data_path, day, day_module, part):
     if part == "parta":
-        return run_parta(data_path, day)
+        return run_parta(data_path, day, day_module)
 
     elif part == "partb":
-        return run_partb(data_path, day)
+        return run_partb(data_path, day, day_module)
 
     else:
-        a = run_parta(data_path, day)
-        b = run_partb(data_path, day)
+        a = run_parta(data_path, day, day_module)
+        b = run_partb(data_path, day, day_module)
 
         return f"Part A:\n{a}\n\nPart B:\n{b}\n"
 
 
-def run_parta(data_path, day):
-    result = day.Day01PartA()(data_path)
+def run_parta(data_path, day, day_module):
+    result = getattr(day_module, f"Day{day}PartA")()(data_path)
     return result
 
 
-def run_partb(data_path, day):
-    result = day.Day01PartB()(data_path)
+def run_partb(data_path, day, day_module):
+    result = getattr(day_module, f"Day{day}PartB")()(data_path)
     return result
 
 
