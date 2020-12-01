@@ -1,6 +1,6 @@
 import pytest
 
-from solutions.{{cookiecutter.file_name}} import {{cookiecutter.class_name}}PartA
+from adventofcode2020.solutions.{{cookiecutter.file_name}} import {{cookiecutter.class_name}}PartA
 
 
 class Test{{cookiecutter.class_name}}PartA:
