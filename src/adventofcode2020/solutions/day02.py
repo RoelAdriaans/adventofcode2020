@@ -39,7 +39,8 @@ class Day02PartA(Day02, FileReaderSolution):
         at_least = policy.at_least
         at_most = policy.at_most
         letter = policy.letter
-        # `letter` must be `at_least` time in the list, and at most `at_moast` times
+
+        # `letter` must be `at_least` time in the list, and at most `at_most` times
         counts = policy.password.count(letter)
         if counts < at_least:
             # To little
@@ -68,11 +69,12 @@ class Day02PartB(Day02, FileReaderSolution):
         second_char = policy.at_most
         letter = policy.letter
 
-        # `letter` must be at place first_char + 1 and second_char + 1
-        cond_1 = policy.password[first_char - 1] == letter
-        cond_2 = policy.password[second_char - 1] == letter
-        # Exactly one of these positions must contain the given letter
-        if sum([cond_1, cond_2]) == 1:
+        # `letter` must be at place first_char - 1 and second_char - 1,
+        # since it's 1-indexed and not zero indexed
+        # Exactly one of these positions must contain the given letter, xor.
+        if (policy.password[first_char - 1] == letter) ^ (
+            policy.password[second_char - 1] == letter
+        ):
             return True
         else:
             return False
