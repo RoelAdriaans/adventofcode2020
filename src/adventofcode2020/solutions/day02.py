@@ -1,6 +1,7 @@
-from adventofcode2020.utils.abstract import FileReaderSolution
-from typing import NamedTuple, List
 import re
+from typing import NamedTuple
+
+from adventofcode2020.utils.abstract import FileReaderSolution
 
 
 class PassPol(NamedTuple):
@@ -17,6 +18,10 @@ class Day02:
         Input `7-9 r: rrrkrrrrrnrrmj`, output is PassPol namedtuple
         """
         results = re.match(r"(\d*)-(\d*) (.): (\w*)", input_password)
+
+        # Make mypy happy
+        assert results
+
         passpol = PassPol(
             at_least=int(results[1]),
             at_most=int(results[2]),
@@ -25,11 +30,12 @@ class Day02:
         )
         return passpol
 
+
+class Day02PartA(Day02, FileReaderSolution):
     def validate_passwords(self, policy: PassPol) -> bool:
         """
         Validate that `password` is valid, with the PassPol policy list
         """
-
         at_least = policy.at_least
         at_most = policy.at_most
         letter = policy.letter
@@ -43,8 +49,6 @@ class Day02:
             return False
         return True
 
-
-class Day02PartA(Day02, FileReaderSolution):
     def solve(self, input_data: str) -> int:
 
         password_list = [
@@ -56,5 +60,27 @@ class Day02PartA(Day02, FileReaderSolution):
 
 
 class Day02PartB(Day02, FileReaderSolution):
+    def validate_passwords(self, policy: PassPol) -> bool:
+        """
+        Validate that `password` is valid, with the PassPol policy list
+        """
+        first_char = policy.at_least
+        second_char = policy.at_most
+        letter = policy.letter
+
+        # `letter` must be at place first_char + 1 and second_char + 1
+        cond_1 = policy.password[first_char - 1] == letter
+        cond_2 = policy.password[second_char - 1] == letter
+        # Exactly one of these positions must contain the given letter
+        if sum([cond_1, cond_2]) == 1:
+            return True
+        else:
+            return False
+
     def solve(self, input_data: str) -> int:
-        raise NotImplementedError
+        password_list = [
+            self.split(x.strip()) for x in input_data.split("\n") if len(x.strip()) >= 1
+        ]
+
+        results = [self.validate_passwords(policy=x) for x in password_list]
+        return sum(results)
