@@ -1,5 +1,6 @@
-from adventofcode2020.utils.abstract import FileReaderSolution
 import math
+
+from adventofcode2020.utils.abstract import FileReaderSolution
 
 
 class Day03:
