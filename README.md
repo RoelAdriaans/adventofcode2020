@@ -42,6 +42,41 @@ pip3 install -e .
 
 Use `tox` to run the tests, run `adventofcode` to run the main application.
 
+## Pre-commit
+
+This project uses [pre-commit]. Pre-commit runs all the required tools before committing.
+This useful tool will be installed with:
+
+```shell
+pip install pre-commit
+```
+
+After installation run:
+
+```shell
+pre-commit install
+```
+
+Now every time before running `git commit` the hooks defined in the
+`.pre-commit-config.yaml` file will be run before actually committing.
+To run this manually, run:
+
+```shell
+pre-commit run --all-files
+```
+
+#### Update pre-commit
+
+Update the `.pre-commit-config.yaml` with the command:
+
+```shell
+pre-commit autoupdate
+```
+
+This command will go online and find the latest versions.
+
+[pre-commit]: https://pre-commit.com/
+
 ## Useful Repo's
 
 ### 2020
