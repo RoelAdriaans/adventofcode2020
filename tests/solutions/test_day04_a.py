@@ -1,10 +1,10 @@
 import pytest
 
-from adventofcode2020.solutions.day03 import Day03PartA
+from adventofcode2020.solutions.day04 import Day04PartA
 
 
-class TestDay03PartA:
-    def test_day03a_solve(self):
+class Testday04PartA:
+    def test_day04a_solve(self):
         input_data = """ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
 byr:1937 iyr:2017 cid:147 hgt:183cm
 
@@ -18,12 +18,12 @@ hgt:179cm
 
 hcl:#cfa07d eyr:2025 pid:166559648
 iyr:2011 ecl:brn hgt:59in"""
-        solution = Day03PartA()
+        solution = Day04PartA()
         result = solution.solve(input_data)
         assert result == 2
 
-    def test_day03a_data(self):
+    def test_day04a_data(self):
         """ Result we got when we did the real solution """
-        solution = Day03PartA()
-        res = solution("day_03/day03.txt")
+        solution = Day04PartA()
+        res = solution("day_04/day04.txt")
         assert res == 216

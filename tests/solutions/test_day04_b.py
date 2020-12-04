@@ -1,9 +1,9 @@
 import pytest
 
-from adventofcode2020.solutions.day03 import Day03PartB
+from adventofcode2020.solutions.day04 import Day04PartB
 
 
-class TestDay03PartB:
+class TestDay04PartB:
     @pytest.mark.parametrize(
         ("input_data", "expected_result"),
         [
@@ -45,14 +45,14 @@ pid:3556412378 byr:2007
             ),
         ],
     )
-    def test_day03b_solve(self, input_data, expected_result):
-        solution = Day03PartB()
+    def test_day04b_solve(self, input_data, expected_result):
+        solution = Day04PartB()
         result = solution.solve(input_data)
         assert result == expected_result
 
-    def test_day03b_data(self):
+    def test_day04b_data(self):
         """ Result we got when we did the real solution """
-        solution = Day03PartB()
-        res = solution("day_03/day03.txt")
+        solution = Day04PartB()
+        res = solution("day_04/day04.txt")
         assert res != 80
         assert res == 150
