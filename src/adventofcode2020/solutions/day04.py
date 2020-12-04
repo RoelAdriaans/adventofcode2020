@@ -37,26 +37,16 @@ class RequiredFields(Enum):
             return False
 
         if code == "hcl":
-            if value[0] != "#":
-                return False
-            if len(value[1:]) != 6:
-                return False
-            # TODO Also match # in regex?
-            regex = r"^([a-z0-9]){6}$"
-            if re.match(pattern=regex, string=value[1:]):
-                return True
-            else:
-                return False
+            regex = r"^(#)([a-z0-9]){6}$"
+            return re.match(pattern=regex, string=value)
 
         if code == "ecl":
             return value in ("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
 
         if code == "pid":
             regex = r"^([0-9]){9}$"
-            if re.match(pattern=regex, string=value):
-                return True
-            else:
-                return False
+            return re.match(pattern=regex, string=value)
+
         if code == "cid":
             return True
 
