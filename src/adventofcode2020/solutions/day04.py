@@ -1,6 +1,7 @@
-from adventofcode2020.utils.abstract import FileReaderSolution
-from enum import Enum
 import re
+from enum import Enum
+
+from adventofcode2020.utils.abstract import FileReaderSolution
 
 
 class RequiredFields(Enum):
@@ -16,7 +17,7 @@ class RequiredFields(Enum):
 
     @staticmethod
     def validate(code, value):
-        if code != 'cid' and value is None:
+        if code != "cid" and value is None:
             return False
 
         if code == "byr":
@@ -56,7 +57,7 @@ class RequiredFields(Enum):
 class Day04:
     @staticmethod
     def validate_passport(
-        passport_lines, RequiredFields, skip=None, validate: bool = False
+        passport_lines, requiredfields, skip=None, validate: bool = False
     ) -> bool:
         if skip is None:
             skip = []
@@ -67,7 +68,7 @@ class Day04:
             k, v = field.split(":")
             parts[k] = v
 
-        for field_to_check in RequiredFields:
+        for field_to_check in requiredfields:
             if validate:
                 if not RequiredFields.validate(
                     field_to_check.name, parts.get(field_to_check.name, None)
@@ -119,20 +120,14 @@ class Day04PartB(Day04, FileReaderSolution):
             else:
                 counts.append(
                     self.validate_passport(
-                        passport_lines,
-                        RequiredFields,
-                        skip=["cid"],
-                        validate=True
+                        passport_lines, RequiredFields, skip=["cid"], validate=True
                     )
                 )
                 passport_lines = []
         # And process the last line
         counts.append(
             self.validate_passport(
-                passport_lines,
-                RequiredFields,
-                skip=["cid"],
-                validate=True
+                passport_lines, RequiredFields, skip=["cid"], validate=True
             )
         )
         return sum(counts)
