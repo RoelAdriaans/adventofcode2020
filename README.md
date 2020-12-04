@@ -48,6 +48,10 @@ Use `tox` to run the tests, run `adventofcode` to run the main application.
 
 - <https://github.com/SebastiaanZ/aoc-2020>
 - <https://github.com/joelgrus/advent2020>
+- <https://github.com/EdwardChamberlain/Advent-of-Code>
+- <https://github.com/Den4200/advent-of-code-2020>
+- <https://github.com/GraceC23245/aoc_2020>
+- <https://github.com/raeq/adventofcode>
 
 ### 2019
 
