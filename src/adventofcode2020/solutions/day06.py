@@ -1,3 +1,4 @@
+import typing
 from collections import Counter
 
 from adventofcode2020.utils.abstract import FileReaderSolution
@@ -22,7 +23,7 @@ class Day06PartB(Day06, FileReaderSolution):
         sum = 0
         for groups in input_data.split("\n\n"):
             # Remove newlines and make it a set
-            group_counter = Counter()
+            group_counter: typing.Counter[str] = Counter()
             for person in groups.splitlines():
                 group_counter.update(person)
 

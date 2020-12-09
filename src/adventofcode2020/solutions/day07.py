@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 import re
 from dataclasses import dataclass
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 from adventofcode2020.utils.abstract import FileReaderSolution
 
@@ -34,7 +34,9 @@ class Bag:
 
         self.contains[bag] = number
 
-    def __eq__(self, other: Bag) -> bool:
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, Bag):
+            return NotImplemented
         return self.color == other.color
 
     def __hash__(self):
@@ -78,8 +80,8 @@ class Day07:
 
             number = int(child_match[1])
             child_color = child_match[2]
-            child_bag = Bag(child_color, number)
-            root_bag.add_bag(child_bag, number)
+            child_bag_inst = Bag(child_color, number)
+            root_bag.add_bag(child_bag_inst, number)
 
         # Append root bag to our bags
         self.bags[color] = root_bag
