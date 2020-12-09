@@ -87,6 +87,7 @@ This command will go online and find the latest versions.
 - <https://github.com/Den4200/advent-of-code-2020>
 - <https://github.com/GraceC23245/aoc_2020>
 - <https://github.com/raeq/adventofcode>
+- <https://github.com/svanjole/AoC2020/tree/master/solutions>
 
 ### 2019
 
