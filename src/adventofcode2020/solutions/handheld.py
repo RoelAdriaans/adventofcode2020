@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import logging
-from collections import defaultdict
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, DefaultDict, List, Set
+from typing import Any, Dict, List, Set
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +37,7 @@ class HandHeld:
 
     accumulator: int
     program_counter: int
-    instructions: DefaultDict[int, Instruction]
+    instructions: Dict[int, Instruction]
     pc_seen: Set
 
     def __init__(self):
@@ -51,7 +50,7 @@ class HandHeld:
 
     def load_instructions(self, instructions: List[str]):
         self.accumulator = 0
-        self.instructions = defaultdict(Instruction)
+        self.instructions = {}
 
         for i, instruction_line in enumerate(instructions):
             opcode, argument = instruction_line.split(" ")
@@ -68,8 +67,16 @@ class HandHeld:
         op = self.instructions[self.program_counter].opcode
         arg = self.instructions[self.program_counter].argument
 
+        if not op:
+            # This instruction might not be needed
+            raise ProgramFinished
+
         if infite_loop_detection and self.program_counter in self.pc_seen:
+            # Another option here it to raise van InfiteLoopException with the
+            # accumulator value as argument?
+            # This will make returns in the future for other programs easier..
             return self.accumulator
+
         elif infite_loop_detection:
             self.pc_seen.add(self.program_counter)
 
@@ -90,6 +97,10 @@ class HandHeld:
         else:
             raise ValueError(f"Unknown opcode: {op}")
 
+        if self.program_counter >= len(self.instructions):
+            # We are done
+            raise ProgramFinished
+
     def run(self, infite_loop_detection: bool = True) -> int:
         """
         Run the Handheld computer.
@@ -106,3 +117,23 @@ class HandHeld:
                     return res
         except ProgramFinished:
             return res
+
+    def run_return_or_raise(self, infite_loop_detection: bool) -> int:
+        while True:
+            res = self.process_instruction(infite_loop_detection)
+            if res is not None:
+                return res
+
+    def run_until_finished_return_acc(self, infite_loop_detection: bool) -> int:
+        """
+        Return until we are finished and return the value in the accumulator
+        """
+        while True:
+            try:
+                res = self.process_instruction(infite_loop_detection)
+                if res is not None:
+                    # We are returning from an infinite loop, but we only care
+                    # for the value when we reach the end of the program
+                    return False
+            except ProgramFinished:
+                return self.accumulator
