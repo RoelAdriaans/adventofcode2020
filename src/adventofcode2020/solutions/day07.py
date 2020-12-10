@@ -112,13 +112,10 @@ class Day07:
         return does_contain_color
 
     def count_bags_for_color(self, color="shiny gold") -> int:
-        current_bag = self.bags[color]
         cnt = 1
-        for sub_bag in current_bag.contains:
-            res = self.count_bags_for_color(sub_bag.color)
+        for sub_bag in self.bags[color].contains:
             # How many times does current sub_bag contain bag?
-            multiplied = res * sub_bag.num_bags
-            cnt += multiplied
+            cnt += self.count_bags_for_color(sub_bag.color) * sub_bag.num_bags
         return cnt
 
 

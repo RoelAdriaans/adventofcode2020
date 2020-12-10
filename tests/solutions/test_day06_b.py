@@ -36,4 +36,4 @@ b""",
         """ Result we got when we did the real solution """
         solution = Day06PartB()
         res = solution("day_06/day06.txt")
-        assert res == 0
+        assert res == 3466
