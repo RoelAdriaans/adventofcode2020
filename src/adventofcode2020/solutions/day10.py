@@ -12,7 +12,7 @@ class Day10:
 
         joltages.append(max_joltage)
         min_joltage = 0
-        differences = Counter()
+        differences: typing.Counter[int] = Counter()
 
         # Take the lowest
 
@@ -24,6 +24,16 @@ class Day10:
             min_joltage = top
 
         return differences
+
+    def find_combinations(self, joltages: List[int]) -> int:
+
+        connections = {joltages[-1]: 1}
+
+        for adapter in reversed(joltages[:-1]):
+            connections[adapter] = sum(
+                connections.get(adapter + i, 0) for i in range(1, 4)
+            )
+        return connections[0]
 
 
 class Day10PartA(Day10, FileReaderSolution):
@@ -41,4 +51,10 @@ class Day10PartA(Day10, FileReaderSolution):
 
 class Day10PartB(Day10, FileReaderSolution):
     def solve(self, input_data: str) -> int:
-        raise NotImplementedError
+        joltages = sorted(int(j.strip()) for j in input_data.splitlines())
+
+        joltages.insert(0, 0)
+
+        comb = self.find_combinations(joltages)
+
+        return comb
