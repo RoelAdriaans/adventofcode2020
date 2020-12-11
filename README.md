@@ -81,16 +81,25 @@ This command will go online and find the latest versions.
 
 ### 2020
 
-- <https://github.com/SebastiaanZ/aoc-2020>
-- <https://github.com/joelgrus/advent2020>
-- <https://github.com/EdwardChamberlain/Advent-of-Code>
-- <https://github.com/Den4200/advent-of-code-2020>
-- <https://github.com/GraceC23245/aoc_2020>
-- <https://github.com/raeq/adventofcode>
-- <https://github.com/svanjole/AoC2020/tree/master/solutions>
 - <https://github.com/AltNyx/adventofcode2020/>
+- <https://github.com/ChaseParate/Advent-of-Code-2020>
+- <https://github.com/Den4200/advent-of-code-2020>
+- <https://github.com/EdwardChamberlain/Advent-of-Code>
+- <https://github.com/GraceC23245/aoc_2020>
+- <https://github.com/joelgrus/advent2020>
+- <https://github.com/raeq/adventofcode>
+- <https://github.com/SebastiaanZ/aoc-2020>
+- <https://github.com/svanjole/AoC2020/tree/master/solutions>
 
 ### 2019
 
-- <https://github.com/SebastiaanZ/aoc-2019>
 - <https://github.com/joelgrus/advent2019>
+- <https://github.com/SebastiaanZ/aoc-2019>
+
+
+### Other resources
+
+- <https://en.wikipedia.org/wiki/Trie>
+- <https://www.youtube.com/watch?v=PMMc4VsIacU>
+- <https://networkx.org/documentation/stable/reference/algorithms/traversal.html>
+- <https://networkx.org/documentation/networkx-1.9/_modules/networkx/algorithms/traversal/breadth_first_search.html>
