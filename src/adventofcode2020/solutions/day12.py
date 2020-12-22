@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from enum import Enum
 from typing import List, NamedTuple
@@ -54,32 +55,19 @@ class Location(NamedTuple):
 
 
 @dataclass
-class Waypoint:
-    location: Location
-
-    def __init__(self):
-        # Set starting location to 10 West, 1 north
-        self.location = Location(horiz=10, vert=1)
-        self.quadrant = Direction.NORTH
-
-    def move(self, delta_vert, delta_horiz) -> Location:
-        self.location = Location(
-            vert=self.location.vert + delta_vert,
-            horiz=self.location.horiz + delta_horiz,
-        )
-
-        return self.location
-
-
-@dataclass
 class Ship:
     direction: Direction
     location: Location
+    speed_hor: int
+    speed_vert: int
 
     def __init__(self, direction: Direction):
         self.direction = direction
         # Set starting location to 0,-
         self.location = Location(0, 0)
+        # For Part b, set initial speed
+        self.speed_vert = 1
+        self.speed_hor = 10
 
     def move(self, delta_vert, delta_horiz) -> Location:
         self.location = Location(
@@ -92,7 +80,6 @@ class Ship:
 
 class Day12:
     ship: Ship
-    waypoint: Waypoint
 
     def compute_manhathan(self) -> int:
         return abs(self.ship.location.vert) + abs(self.ship.location.horiz)
@@ -159,59 +146,35 @@ class Day12PartB(Day12, FileReaderSolution):
                 # (Vert, Horizontal) movement
                 # Action F means to move forward to the waypoint a number of
                 # times equal to the given value.
-                delta_vert = self.waypoint.location.vert * inst.value
-                deltra_horiz = self.waypoint.location.horiz * inst.value
+                deltra_horiz = self.ship.speed_hor * inst.value
+                delta_vert = self.ship.speed_vert * inst.value
                 self.ship.move(delta_vert=delta_vert, delta_horiz=deltra_horiz)
 
             elif action == "R" or action == "L":
-                # Turn the waypoint around, left or right
-                # We have the values 90, 180 or 270 degrees turning
-                steps = inst.value // 90 % 4
+                # Turn the speed around:
+                if action == "R":
+                    angle = math.radians(inst.value * -1)
+                else:
+                    angle = math.radians(inst.value)
 
-                for _ in range(steps):
-                    horiz = self.waypoint.location.horiz
-                    vert = self.waypoint.location.vert
-                    # If we turn left, we go backwards
-                    if action == "L":
-                        direction = -1
-                    else:
-                        direction = 1
+                x = self.ship.speed_hor
+                y = self.ship.speed_vert
 
-                    if horiz <= 0 and vert > 0:
-                        quadrant = Direction.WEST
-                    elif horiz < 0 and vert <= 0:
-                        quadrant = Direction.SOUTH
-                    elif horiz > 0 and vert <= 0:
-                        quadrant = Direction.EAST
-                    elif horiz >= 0 and vert > 0:
-                        quadrant = Direction.NORTH
-                    else:
-                        raise ValueError(
-                            f"Unknown quadrant for {vert=} {horiz=} "
-                            f"{self.waypoint.location=}"
-                        )
-
-                    new_quadrant = Direction.get_next(quadrant, direction)
-                    # Horiz, Vert
-                    directions = {
-                        Direction.NORTH: (abs(horiz), abs(vert)),  # Horiz
-                        Direction.EAST: (abs(horiz), abs(vert) * -1),  # Vertical
-                        Direction.SOUTH: (abs(horiz) * -1, abs(vert) * -1),  # Horiz
-                        Direction.WEST: (abs(horiz) * -1, abs(vert)),  # Vert
-                    }
-
-                    new_horiz, new_vert = directions[new_quadrant]
-                    new_location = Location(horiz=new_horiz, vert=new_vert)
-                    self.waypoint.location = new_location
+                self.ship.speed_hor = (x * int(math.cos(angle))) - (
+                    y * int(math.sin(angle))
+                )
+                self.ship.speed_vert = (x * int(math.sin(angle))) + (
+                    y * int(math.cos(angle))
+                )
 
             elif action == "N":
-                self.waypoint.move(delta_vert=inst.value, delta_horiz=0)
+                self.ship.speed_vert += inst.value
             elif action == "S":
-                self.waypoint.move(delta_vert=(-1 * inst.value), delta_horiz=0)
+                self.ship.speed_vert += -1 * inst.value
             elif action == "E":
-                self.waypoint.move(delta_vert=0, delta_horiz=inst.value)
+                self.ship.speed_hor += inst.value
             elif action == "W":
-                self.waypoint.move(delta_vert=0, delta_horiz=(-1 * inst.value))
+                self.ship.speed_hor += -1 * inst.value
             else:
                 raise ValueError(f"Unknown action {action}")
 
@@ -222,7 +185,6 @@ class Day12PartB(Day12, FileReaderSolution):
         ]
 
         self.ship = Ship(direction=Direction.EAST)
-        self.waypoint = Waypoint()
 
         self.parse_instructions(instructions)
 
