@@ -28,4 +28,4 @@ class TestDay14PartA:
         """ Result we got when we did the real solution """
         solution = Day14PartA()
         res = solution("day_14/day14.txt")
-        assert res == 0
+        assert res == 18630548206046
