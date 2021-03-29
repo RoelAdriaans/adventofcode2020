@@ -3,7 +3,7 @@ black
 Click
 cookiecutter
 matplotlib
-numpy==1.20.0
+numpy==1.20.2
 pytest
 pytest-cov
 pytest-xdist
